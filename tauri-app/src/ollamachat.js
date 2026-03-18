@@ -15,4 +15,4 @@ async function chat() {
   console.log(data.message.content);
 }
 
-chat();
+export default chat;
