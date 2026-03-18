@@ -3,36 +3,44 @@ import "./App.css";
 
 function App() {
   return (
-    <dev>
+    <div>
       <h1>Hello</h1>
       <Form />
-    </dev>
+    </div>
   );
 }
 
 function Form() {
   const [text, setText] = useState("");
+  const [response, setResponse] = useState("");
 
-  function handleClick(e) {
-    e.preventDefault();
-    console.log({ text });
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    const res = await fetch("http://localhost:3000/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+
+    const data = await res.json();
+    setResponse(data.message);
   }
   return (
-    <>
-      <form method="post" onSubmit={handleClick}></form>
+    <form onSubmit={handleSubmit}>
       <label>
-        Text input:
+        Chat input:
         <input
           type="text"
           placeholder="Enter your message here"
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(event) => setText(event.target.value)}
         />
       </label>
-      <button className="ask" type="submit" onClick={handleClick}>
-        Submit
-      </button>
-    </>
+      <button type="submit">Submit</button>
+      <p>Input: {text}</p>
+      <p>Response: {response}</p>
+    </form>
   );
 }
 

@@ -1,4 +1,4 @@
-async function chat() {
+async function chat(event) {
   const res = await fetch("http://localhost:11434/api/chat", {
     method: "POST",
     headers: {
@@ -6,13 +6,15 @@ async function chat() {
     },
     body: JSON.stringify({
       model: "llama3.2",
-      messages: [{ role: "user", content: "What is a neural network?" }],
+      messages: [{
+        role: "user", content: event
+      }],
       stream: false,
     }),
   });
 
   const data = await res.json();
-  console.log(data.message.content);
+  return data.message.content
 }
 
 export default chat;
