@@ -1,4 +1,5 @@
 import express from "express";
+import chat from "./ollama";
 const app = express();
 const port = 3000;
 
@@ -9,28 +10,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/api/chat", async (req, res) => {
-
-  const resOllama = await fetch("http://localhost:11434/api/chat", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      model: "llama3.2",
-      stream: "false",
-      messages: [
-        {
-          role: "user",
-          content: "in 1 line - why is the sky blue?",
-        },
-      ],
-    }),
-  });
-  const data = await resOllama.json();
+  data = await chat()
   res.json(data)
-  console.log(data)
 });
-
 
 
 app.listen(port, () => {
