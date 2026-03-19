@@ -6,9 +6,7 @@ async function chat(event) {
     },
     body: JSON.stringify({
       model: "llama3.2",
-      messages: [{
-        role: "user", content: event
-      }],
+      messages: event,
       stream: false,
     }),
   });
