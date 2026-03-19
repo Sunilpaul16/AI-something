@@ -13,26 +13,47 @@ function App() {
 
 function Form() {
   const [text, setText] = useState("");
-  const [response, setResponse] = useState("");
+  const [log, setLog] = useState([]);
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const data = await chat(text);
+    console.log("Sending:", text);
+    const userMessage = {
+      id: Date.now(),
+      role: "user",
+      content: text,
+    };
+    const newMessages = [...log, userMessage];
+    setLog((prev) => [...prev, userMessage]);
+    const data = await chat(newMessages);
     console.log("Received response:", data);
-    setResponse(data);
+    const assistantMessage = {
+      id: Date.now(),
+      role: "assistant",
+      content: data,
+    };
+    setLog((prev) => [...prev, assistantMessage]);
   }
-
   return (
-    <form onSubmit={handleSubmit}>
-      Chat input:
-      <input
-        type="text"
-        value={text}
-        onChange={(event) => setText(event.target.value)}
-      />
-      <button type="submit">Submit</button>
-      <p>Response: {response}</p>
-    </form>
+    <>
+      <ul>
+        {log.map((role) => (
+          <li key={role.id}>
+            <b name="role">{role.role}:</b> {role.content}
+          </li>
+        ))}
+      </ul>
+      <form onSubmit={handleSubmit}>
+        Chat input:
+        <input
+          type="text"
+          name="ask"
+          value={text}
+          onChange={(event) => setText(event.target.value)}
+        />
+        <button type="submit">Submit</button>
+      </form>
+    </>
   );
 }
 
