@@ -23,9 +23,14 @@ function Form() {
       role: "user",
       content: text,
     };
+    setText("");
     const newMessages = [...log, userMessage];
     setLog((prev) => [...prev, userMessage]);
-    const data = await chat(newMessages);
+    const cleanMessages = newMessages.map(({ role, content }) => ({
+      role,
+      content,
+    }));
+    const data = await chat(cleanMessages);
     console.log("Received response:", data);
     const assistantMessage = {
       id: Date.now(),

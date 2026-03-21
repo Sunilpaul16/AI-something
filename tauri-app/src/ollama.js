@@ -5,7 +5,7 @@ async function chat(event) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "llama3.2",
+      model: "jarvis",
       messages: event,
       stream: false,
     }),
