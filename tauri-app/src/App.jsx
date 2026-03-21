@@ -1,6 +1,7 @@
 import { useState } from "react";
 import chat from "./ollama";
-import runTest from "./db";
+import { runTest, insertMessage } from "./db";
+
 import "./App.css";
 
 function App() {
@@ -25,6 +26,8 @@ function Form() {
       role: "user",
       content: text,
     };
+    insertMessage(userMessage.role, text);
+    console.log(insertMessage);
     setText("");
     const newMessages = [...log, userMessage];
     setLog((prev) => [...prev, userMessage]);
@@ -39,6 +42,8 @@ function Form() {
       role: "assistant",
       content: data,
     };
+    insertMessage(assistantMessage.role, data);
+
     setLog((prev) => [...prev, assistantMessage]);
   }
   return (

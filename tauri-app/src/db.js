@@ -1,6 +1,6 @@
 import Database from '@tauri-apps/plugin-sql';
 
-export default async function runTest() {
+async function runTest() {
     try {
         async function initDB() {
             const db = await Database.load('sqlite:chat.db');
@@ -14,20 +14,21 @@ export default async function runTest() {
         `);
             return db;
         }
-
         const db = await initDB();
-
-        await db.execute(
-            "INSERT INTO messages (role, content) VALUES ($1, $2)",
-            ['user', 'testing db']
-        );
-
-        const rows = await db.select("SELECT * FROM messages");
-        console.log(rows);
-
     } catch (err) {
         console.error("DB error:", err);
     }
 }
 
+async function insertMessage(role, content) {
 
+    const db = await Database.load('sqlite:chat.db');
+    await db.execute(
+        "INSERT INTO messages (role, content) VALUES ($1, $2)",
+        [role, content]
+    );
+    const rows = await db.select("SELECT * FROM messages");
+    console.log(rows);
+}
+
+export { runTest, insertMessage };
