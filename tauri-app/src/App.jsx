@@ -1,5 +1,6 @@
 import { useState } from "react";
 import chat from "./ollama";
+import runTest from "./db";
 import "./App.css";
 
 function App() {
@@ -17,6 +18,7 @@ function Form() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    runTest();
     console.log("Sending:", text);
     const userMessage = {
       id: Date.now(),
@@ -44,7 +46,7 @@ function Form() {
       <ul>
         {log.map((role) => (
           <li key={role.id}>
-            <b name="role">{role.role}:</b> {role.content}
+            <b name="role">{role.role.toUpperCase()}:</b> {role.content}
           </li>
         ))}
       </ul>
