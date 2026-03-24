@@ -28,7 +28,6 @@ async function insertMessage(role, content) {
         [role, content]
     );
     const rows = await db.select("SELECT * FROM messages");
-    console.log(rows);
 }
 
 export { runTest, insertMessage };
