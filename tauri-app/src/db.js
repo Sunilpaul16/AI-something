@@ -1,6 +1,6 @@
 import Database from '@tauri-apps/plugin-sql';
 
-async function runTest() {
+async function createDB() {
     try {
         async function initDB() {
             const db = await Database.load('sqlite:chat.db');
@@ -30,4 +30,4 @@ async function insertMessage(role, content) {
     const rows = await db.select("SELECT * FROM messages");
 }
 
-export { runTest, insertMessage };
+export { createDB, insertMessage };

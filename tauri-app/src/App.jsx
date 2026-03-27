@@ -1,6 +1,6 @@
 import { useState } from "react";
 import chat from "./ollama";
-import { runTest, insertMessage } from "./db";
+import { createDB, insertMessage } from "./db";
 
 import "./App.css";
 
@@ -19,7 +19,7 @@ function Form() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    runTest();
+    createDB();
     console.log("Sending:", text);
     const userMessage = {
       id: Date.now(),
