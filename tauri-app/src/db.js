@@ -16,7 +16,7 @@ async function createDB() {
         }
         const db = await initDB();
     } catch (err) {
-        console.error("DB error:", err);
+        console.error("DB error: ", err);
     }
 }
 
