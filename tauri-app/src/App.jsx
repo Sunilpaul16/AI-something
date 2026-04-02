@@ -1,8 +1,8 @@
-import { useState } from "react";
-import chat from "./ollama";
-import { createDB, insertMessage } from "./db";
+import { useState } from 'react';
+import chat from './ollama';
+import { createDB, insertMessage } from './db';
 
-import "./App.css";
+import './App.css';
 
 function App() {
   return (
@@ -14,21 +14,21 @@ function App() {
 }
 
 function Form() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const [log, setLog] = useState([]);
 
   async function handleSubmit(event) {
     event.preventDefault();
     createDB();
-    console.log("Sending:", text);
+    console.log('Sending:', text);
     const userMessage = {
       id: Date.now(),
-      role: "user",
+      role: 'user',
       content: text,
     };
     insertMessage(userMessage.role, text);
     console.log(insertMessage);
-    setText("");
+    setText('');
     const newMessages = [...log, userMessage];
     setLog((prev) => [...prev, userMessage]);
     const cleanMessages = newMessages.map(({ role, content }) => ({
@@ -36,10 +36,10 @@ function Form() {
       content,
     }));
     const data = await chat(cleanMessages);
-    console.log("Received response:", data);
+    console.log('Received response:', data);
     const assistantMessage = {
       id: Date.now(),
-      role: "assistant",
+      role: 'assistant',
       content: data,
     };
     insertMessage(assistantMessage.role, data);
